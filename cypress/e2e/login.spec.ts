@@ -2,8 +2,8 @@
 
 describe('Login specs', () => {
   beforeEach(() => {
-    // Visit the login page before each test
-    cy.visit('/');
+    // Visit the login page before each test (with hash for HashRouter)
+    cy.visit('/#/');
   });
 
   it('should visit the login page', () => {
@@ -11,6 +11,7 @@ describe('Login specs', () => {
 
     // Assert
     cy.url().should('include', '#/');
+    cy.location('hash').should('equal', '#/');
     cy.get('input[name="user"]').should('be.visible');
     cy.get('input[name="password"]').should('be.visible');
     cy.get('button[type="submit"]').should('contain', 'Login');
