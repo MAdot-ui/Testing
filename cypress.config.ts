@@ -10,6 +10,14 @@ export default defineConfig({
     supportFile: 'cypress/support/e2e.ts',
     video: false,
     screenshotOnRunFailure: true,
+    defaultCommandTimeout: 10000,
+    requestTimeout: 10000,
+    responseTimeout: 10000,
+    pageLoadTimeout: 30000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
   component: {
     devServer: {

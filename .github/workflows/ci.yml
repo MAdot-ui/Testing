@@ -44,7 +44,7 @@ jobs:
 
     - name: Start dev server
       run: |
-        npm run start:dev > /dev/null 2>&1 &
+        npx vite --host 0.0.0.0 --port 5173 > /dev/null 2>&1 &
         echo $! > server.pid
       env:
         CI: true
@@ -62,9 +62,16 @@ jobs:
           exit 1
         fi
         echo "Server is ready!"
+        # Give it a bit more time to fully initialize
+        sleep 3
+        # Verify server is actually serving content
+        curl -f http://localhost:5173 || (echo "Server health check failed" && exit 1)
 
     - name: Run Cypress tests
       run: npm run test:cypress:ci
+      continue-on-error: false
+      env:
+        CYPRESS_baseUrl: http://localhost:5173
 
     - name: Run Playwright tests
       run: npm run test:playwright:ci
