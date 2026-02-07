@@ -76,6 +76,9 @@ jobs:
 
     - name: Run Playwright tests
       run: npm run test:playwright:ci
+      continue-on-error: false
+      env:
+        CI: true
 
     - name: Stop dev server
       if: always()
